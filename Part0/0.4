@@ -1,0 +1,14 @@
+sequenceDiagram
+    participant Browser
+    participant Server
+
+    Browser->>+Server: POST https://studies.cs.helsinki.fi/exampleapp/new_note <br/> Payload {note: Hey}
+    Server-->>Browser: redirect to https://studies.cs.helsinki.fi/exampleapp/notes
+    Server-->>Browser: HTML File
+    Server-->>Browser: CSS File
+    Server-->>-Browser: JS File
+    Note right of Browser:  Server accepts payload and adds it to array then redirect to /notes
+    Browser->>+Server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
+    Note right of Browser: JS file executes function to fetch data
+    Server-->>-Browser:  [... ,{content: "hey", date:"2024-07-09"}]
+    Note right of Browser: JS executes function to display data with new data appended
