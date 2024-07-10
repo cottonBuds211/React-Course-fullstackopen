@@ -36,6 +36,7 @@ function App() {
 		setPositive(() => calculatePositiveFeedBack(good, neutral, updatedBad));
 	};
 
+	//Calculate Positive
 	const calculatePositiveFeedBack = (good, neutral, bad) => {
 		if (good === 0) {
 			return 0;
@@ -44,6 +45,8 @@ function App() {
 		const averagePositive = (good / total) * 100;
 		return averagePositive;
 	};
+
+	//calculate average
 	const calculateAverage = (good, neutral, bad) => {
 		const total = good + neutral + bad;
 		return (good * 1 + neutral * 0 + bad * -1) / total;
