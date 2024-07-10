@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 function App() {
 	const course = {
 		course: "Half Stack application development",
