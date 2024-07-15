@@ -5,24 +5,16 @@ const Person = (props) => {
 		</p>
 	);
 };
-const Persons = ({ persons, filtered, searchTerm }) => {
+const Persons = ({ filteredData }) => {
 	return (
 		<div>
-			{searchTerm
-				? filtered.map((person) => (
-						<Person
-							key={person.id}
-							name={person.name}
-							number={person.number}
-						/>
-				  ))
-				: persons.map((person) => (
-						<Person
-							key={person.id}
-							name={person.name}
-							number={person.number}
-						/>
-				  ))}
+			{filteredData.map((person) => (
+				<Person
+					key={person.id}
+					name={person.name}
+					number={person.number}
+				/>
+			))}
 		</div>
 	);
 };
