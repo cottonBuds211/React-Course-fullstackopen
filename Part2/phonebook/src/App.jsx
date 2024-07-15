@@ -2,23 +2,18 @@ import { useState } from "react";
 import { PersonForm } from "./Component/PersonForm";
 import Filter from "./Component/Filter";
 import Persons from "./Component/Persons";
-import axios from "axios";
 import { useEffect } from "react";
+import personsServices from "./Services/persons";
 function App() {
 	const [persons, setPersons] = useState([]);
 	const [searchTerm, setSearchTerm] = useState("");
 
 	useEffect(() => {
-		axios
-			.get("http://localhost:3001/persons")
-			.then((response) => setPersons(response.data));
+		personsServices
+			.getAll()
+			.then((initialPersons) => setPersons(initialPersons));
 	}, []);
 
-	const filteredData = searchTerm
-		? persons.filter((person) =>
-				person.name.toLowerCase().includes(searchTerm.toLowerCase())
-		  )
-		: persons;
 	return (
 		<>
 			<div>
@@ -27,7 +22,11 @@ function App() {
 				<h2>Add a new</h2>
 				<PersonForm setPersons={setPersons} persons={persons} />
 				<h2>Numbers</h2>
-				<Persons filteredData={filteredData} />
+				<Persons
+					persons={persons}
+					searchTerm={searchTerm}
+					setPersons={setPersons}
+				/>
 			</div>
 		</>
 	);

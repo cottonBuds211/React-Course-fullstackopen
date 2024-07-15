@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import personsServices from "../Services/persons";
 
 export const PersonForm = ({ setPersons, persons }) => {
 	const handleSubmit = (event) => {
@@ -8,18 +9,35 @@ export const PersonForm = ({ setPersons, persons }) => {
 		const newContact = {
 			name: newPerson.name,
 			number: newPerson.number,
-			id: Math.floor(Math.random(1, 2000) * 1000),
+			id: String(Math.floor(Math.random(1, 2000) * 1000)),
 		};
 		//console.log(newContact);
-		const findSame = persons.find((per) => per.name === newContact.name);
+		const foundSame = persons.find((per) => per.name === newContact.name);
+		if (foundSame) {
+			const confirm = window.confirm(
+				`${newContact.name} is already added to the phonebook, replace the number with a new one?`
+			);
+			const changedNum = { ...foundSame, number: `${newContact.number}` };
 
-		if (findSame) {
-			alert(`${newContact.name} is already added to the phonebook`);
+			if (confirm) {
+				personsServices
+					.update(foundSame.id, changedNum)
+					.then((returnedPerson) => {
+						setPersons(
+							persons.map((p) =>
+								p.id !== foundSame.id ? p : returnedPerson
+							)
+						);
+					});
+			}
 		} else {
-			setPersons(persons.concat(newContact));
-			setNewPerson({ name: "", number: "" });
+			personsServices.create(newContact).then((returnedContact) => {
+				setPersons(persons.concat(returnedContact));
+				setNewPerson({ name: "", number: "" });
+			});
 		}
 	};
+
 	const handleInputChange = (event) => {
 		console.log(event.target);
 		const { name, value } = event.target;
@@ -29,6 +47,7 @@ export const PersonForm = ({ setPersons, persons }) => {
 			[name]: value,
 		});
 	};
+
 	const [newPerson, setNewPerson] = useState({
 		name: "",
 		number: "",
