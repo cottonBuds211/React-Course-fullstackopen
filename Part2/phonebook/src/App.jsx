@@ -8,7 +8,7 @@ import { Notification } from "./Component/Notification";
 function App() {
 	const [persons, setPersons] = useState([]);
 	const [searchTerm, setSearchTerm] = useState("");
-	const [message, setMessage] = useState(null);
+	const [message, setMessage] = useState({ message: null, type: null });
 
 	useEffect(() => {
 		personsServices
@@ -33,6 +33,7 @@ function App() {
 					persons={persons}
 					searchTerm={searchTerm}
 					setPersons={setPersons}
+					setMessage={setMessage}
 				/>
 			</div>
 		</>
