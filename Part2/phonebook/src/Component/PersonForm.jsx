@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import personsServices from "../Services/persons";
 
-export const PersonForm = ({ setPersons, persons }) => {
+export const PersonForm = ({ setPersons, persons, setMessage }) => {
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		//console.log(event.target);
@@ -34,6 +34,8 @@ export const PersonForm = ({ setPersons, persons }) => {
 			personsServices.create(newContact).then((returnedContact) => {
 				setPersons(persons.concat(returnedContact));
 				setNewPerson({ name: "", number: "" });
+				setMessage(`Added ${returnedContact.name}`);
+				setTimeout(() => setMessage(null), 5000);
 			});
 		}
 	};
