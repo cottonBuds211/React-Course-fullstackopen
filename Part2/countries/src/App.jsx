@@ -8,14 +8,19 @@ function App() {
 	const [searchCountry, setSearchCountry] = useState("");
 
 	useEffect(() => {
-		//used debounce function
+		//using debounce function
 		const getData = setTimeout(() => {
 			if (searchCountry !== "") {
 				countries.getAll().then((initialCountries) => {
 					const filtered = initialCountries.filter((c) => {
-						return c.name.common
-							.toLowerCase()
-							.includes(searchCountry.toLowerCase());
+						return (
+							c.name.common
+								.toLowerCase()
+								.includes(searchCountry.toLowerCase()) ||
+							c.cca3
+								.toLowerCase()
+								.includes(searchCountry.toLowerCase())
+						);
 					});
 					console.log(searchCountry.toLowerCase());
 					setCountriesArray(filtered);
@@ -34,8 +39,12 @@ function App() {
 	return (
 		<>
 			<div>
-				find countries: <input onChange={handleChange} />
-				<Countries countries={countriesArray} />
+				find countries:{" "}
+				<input value={searchCountry} onChange={handleChange} />
+				<Countries
+					countries={countriesArray}
+					setSearchCountry={setSearchCountry}
+				/>
 			</div>
 		</>
 	);
