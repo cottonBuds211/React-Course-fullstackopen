@@ -14,13 +14,17 @@ function App() {
 
 	const [selected, setSelected] = useState(0);
 	const [votes, setVotes] = useState(Array(anecdotes.length).fill(0));
-
+	console.log(selected)
+	console.log(votes)
 	//index of max vote
+	//finds the position of the anecdote with the max vote
 	const maxVote = votes.indexOf(Math.max(...votes));
+
 	//console.log(maxVotes);
 	//console.log(votes);
 
 	//Clicking next button
+	//Randomly selects an anecdote when next button is pressed
 	const handleNext = () => {
 		let max = anecdotes.length;
 		let min = 0;
